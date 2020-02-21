@@ -32,4 +32,6 @@ jobs:
       - name: build
         shell: bash -l {0}
         run: |
-          bioconda-utils build tools config.yml --git-range origin/master HEAD
+          bioconda-utils build tools config.yml \
+            --git-range origin/master HEAD \
+            --anaconda-upload
