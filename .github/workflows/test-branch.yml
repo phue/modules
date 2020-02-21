@@ -1,0 +1,37 @@
+# Lint & test-build all branches except master
+name: test-branch
+
+on: 
+  push: 
+    branches-ignore: 
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 200 
+      # fetch other branches
+      - run: |    
+         git fetch --no-tags --prune --depth=200 origin +refs/heads/*:refs/remotes/origin/*
+      - uses: goanpeca/setup-miniconda@v1
+        with:
+          auto-update-conda: true
+          python-version: 3.7
+      - name: Setup bioconda-utils
+        shell: bash -l {0}
+        run: .github/setup.sh
+      - name: lint
+        shell: bash -l {0}
+        run: |
+          bioconda-utils lint tools config.yml \
+            --exclude missing_hash missing_tests \
+            --loglevel debug --full-report \
+            --git-range origin/master HEAD
+      - name: build
+        shell: bash -l {0}
+        run: |
+          bioconda-utils build tools config.yml \
+            --git-range origin/master HEAD
