@@ -19,16 +19,18 @@ jobs:
       - name: Setup bioconda-utils
         shell: bash -l {0}
         run: .github/setup.sh
+        # run lint & build for the latest commit only
+        # This requires a 'squash' merge strategy. 
       - name: lint
         shell: bash -l {0}
         run: |
           bioconda-utils lint tools config.yml \
             --exclude missing_hash missing_tests \
             --loglevel debug --full-report \
-            --git-range origin/master HEAD
+            --git-range HEAD~1 HEAD
       - name: build
         shell: bash -l {0}
         run: |
           bioconda-utils build tools config.yml \
-            --git-range origin/master HEAD \
+            --git-range HEAD~1 HEAD \
             --anaconda-upload
