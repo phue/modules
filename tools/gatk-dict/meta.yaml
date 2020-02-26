@@ -43,3 +43,5 @@ extra:
                 pattern: "*.{fasta,fa}.{dict}"
     authors:
         - maxulysse
+
+

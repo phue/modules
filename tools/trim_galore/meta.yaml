@@ -61,3 +61,5 @@ extra:
                 pattern: "*_fastqc.{zip,html}"
     authors:
         - ewels
+
+          

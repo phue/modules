@@ -42,3 +42,4 @@ extra:
                 pattern: "*.{fasta,fa}.{amb,ann,bwt,pac,sa}"
     authors:
         - maxulysse
+
